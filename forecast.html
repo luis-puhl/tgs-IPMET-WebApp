@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Testing Ajax for Munhoz</title>
+	<link id="link-article-snippet" rel="alternate snippet prefetch" href="forecastArticle.snippet.html">
+	<link id="link-rel-cidades" rel="prefetch author" href="http://www.ipmet.unesp.br/tempo/cidades.xml">
+	<!-- <link id="link-rel-cidades" rel="cidades" href="cidades.xml"> -->
+</head>
+<body>
+	<article id="overallForecast" class="">
+	</article>
+
+	<script src="ForecastLoader.js" charset="utf-8"></script>
+	<script type="text/javascript">
+		var urlParams;
+		(window.onpopstate = function () {
+		var match,
+			pl     = /\+/g,  // Regex for replacing addition symbol with a space
+			search = /([^&=]+)=?([^&]*)/g,
+			decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
+			query  = window.location.search.substring(1);
+
+		urlParams = {};
+		while (match = search.exec(query))
+		   urlParams[decode(match[1])] = decode(match[2]);
+		})();
+		window.onload = function(){
+			forecastLoader.updateCity(urlParams.city);
+		};
+	</script>
+</body>
+</html>
